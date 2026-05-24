@@ -222,9 +222,58 @@ Most job listings are fake or stale. LinkedIn's job board is noise. But when a f
 - [AIHawk](https://github.com/feder-cr/Jobs_Applier_AI_Agent_AIHawk) — prior art in job application automation (core open-sourced, plugins removed)
 
 
-## Deployment
+## Quick Start
 
-Hosted on **Render free plan**. The free tier spins down after 15 minutes of inactivity and cold-starts on the next request — acceptable for a portfolio/personal tool.
+```bash
+# Clone
+git clone https://github.com/chaitanyagatreddi/job-signal.git
+cd job-signal
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run setup — prompts for API keys on first run
+python3 config.py
+```
+
+### What you need
+
+| Key | Where to get it | Cost |
+|-----|----------------|------|
+| Apify API token | [apify.com](https://apify.com) → Settings → Integrations | Free tier available |
+| OpenAI API key | [platform.openai.com](https://platform.openai.com) → API keys | Pay per use |
+
+Optional (for power users):
+| Key | Where to get it |
+|-----|----------------|
+| Browserbase API key | [browserbase.com](https://browserbase.com) → Dashboard → API key |
+
+### Run the pipeline
+
+```bash
+# Step 1: Scout — scrape LinkedIn hiring posts
+python3 scout.py
+
+# Step 2: Rank — score posts using X algorithm signals
+python3 ranker.py
+
+# Step 3: Parse your resume (paste or save to data/resume.txt)
+python3 parser.py
+
+# Step 4: STAR analysis — paste a JD (or save to data/jd.txt)
+python3 star.py
+```
+
+### Pipeline flow
+
+```
+scout.py → data/raw_signals.json
+ranker.py → data/ranked_signals.json
+parser.py → data/parsed_profile.json
+star.py → data/star_analysis.json
+```
+
+Each agent reads the previous agent's output. Run them in order.
 
 
 ## Why This Exists
