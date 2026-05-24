@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+venv/
+.venv/
+data/
+*.json
+!package.json
+node_modules/
+.DS_Store
